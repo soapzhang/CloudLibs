@@ -1,0 +1,222 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.jeesuite</groupId>
+	<artifactId>jeesuite-libs</artifactId>
+	<version>1.3.4-SNAPSHOT</version>
+	<packaging>pom</packaging>
+	<description>java 后台开发套件</description>
+	<name>jeesuite-libs</name>
+	<url>http://www.jeesuite.com</url>
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>vakin jiang</name>
+			<email>vakinge@gmail.com</email>
+			<organization>github</organization>
+			<organizationUrl>https://github.com/vakinge</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>
+         scm:git:https://github.com/vakinge/jeesuite-libs.git
+      </connection>
+		<developerConnection>
+         scm:git:https://github.com/vakinge/jeesuite-libs.git
+      </developerConnection>
+		<url>https://github.com/vakinge/jeesuite-libs</url>
+		<tag>v1.0</tag>
+	</scm>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+		<output.encoding>utf-8</output.encoding>
+		<spring.version>5.0.5.RELEASE</spring.version>
+		<spring-boot.version>2.0.1.RELEASE</spring-boot.version>
+		<kafka.version>0.10.2.0</kafka.version>
+		<zkclient.version>0.10</zkclient.version>
+		<zookeeper.version>3.4.14</zookeeper.version>
+		<jedis.version>2.9.0</jedis.version>
+		<mybatis.version>3.4.2</mybatis.version>
+		<mapper.version>3.3.9</mapper.version>
+		<druid.version>1.0.16</druid.version>
+		<junit.version>4.12</junit.version>
+	</properties>
+
+	<modules>
+		<module>jeesuite-common</module>
+		<module>jeesuite-kafka</module>
+		<module>jeesuite-spring</module>
+		<module>jeesuite-cache</module>
+		<module>jeesuite-scheduler</module>
+		<module>jeesuite-mybatis</module>
+		<module>jeesuite-rest</module>
+		<module>jeesuite-common2</module>
+		<module>jeesuite-filesystem</module>
+		<module>jeesuite-springboot-starter</module>
+		<module>jeesuite-springweb</module>
+		<!-- 
+		<module>jeesuite-search</module>
+		 -->
+		<module>jeesuite-event</module>
+		<module>jeesuite-security</module>
+		<module>jeesuite-log</module>
+	</modules>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>2.7</version>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>2.7</version>
+			<optional>true</optional>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.21</version>
+		</dependency>
+
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<source>${compiler.jdk.version}</source>
+							<target>${compiler.jdk.version}</target>
+							<encoding>${output.encoding}</encoding>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-deploy-plugin</artifactId>
+						<configuration>
+							<skip>false</skip>
+						</configuration>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>2.9.1</version>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+								<configuration>
+									<additionalparam>-Xdoclint:none</additionalparam>
+								</configuration>
+							</execution>
+						</executions>
+					</plugin>
+
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-gpg-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>sign-artifacts</id>
+								<phase>verify</phase>
+								<goals>
+									<goal>sign</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+
+		</profile>
+	</profiles>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${output.encoding}</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>false</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<distributionManagement>
+		<!-- mvn clean deploy -P release -DskipTests=true -Dgpg.passphrase=密码 -->
+		<snapshotRepository>
+         <id>snapshots</id>
+          <url>http://nexus.xx.com/nexus/content/repositories/snapshots</url> 
+          
+        </snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+
+</project>
